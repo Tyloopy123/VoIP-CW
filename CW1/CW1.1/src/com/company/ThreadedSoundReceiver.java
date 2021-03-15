@@ -1,7 +1,10 @@
 package com.company;
 
-import CMPC3M06.AudioPlayer;
+/*
+ bolaji onanuga 14/3/2021
+ */
 
+import CMPC3M06.AudioPlayer;
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.lang.Runnable;
@@ -11,11 +14,18 @@ import java.nio.ByteBuffer;
 public class ThreadedSoundReceiver implements Runnable{
 
     static DatagramSocket receiving_socket;
+    NetworkCoursework.SocketType socketType;
+
+    public ThreadedSoundReceiver(NetworkCoursework.SocketType socketType){
+        this.socketType = socketType;
+    }
+
     public void start(){
         Thread thread = new Thread();
         thread.start();
     }
 
+    @Override
     public void run(){
         //Port to open socket on
         int port = 55555;
@@ -44,8 +54,8 @@ public class ThreadedSoundReceiver implements Runnable{
         int cipher = 196157828;
 
         //In while loop, the sound packet is decrypted and then played.
-        boolean running = true;
-        while (running) {
+        boolean isRunning = true;
+        while (isRunning) {
             try {
                 receiving_socket.receive(packet);
                 ByteBuffer unwrapDecrypt = ByteBuffer.allocate(buffer.length);

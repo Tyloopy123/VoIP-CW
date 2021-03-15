@@ -5,24 +5,29 @@ package com.company;
  */
 
 import CMPC3M06.AudioRecorder;
+
 import javax.sound.sampled.LineUnavailableException;
-import java.io.*;
+import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
-
-import static com.company.NetworkCoursework.SocketType.Type1;
 import static java.lang.System.exit;
+import static com.company.NetworkCoursework.SocketType.Type1;
 
 public class ThreadedSoundSender implements Runnable{
 
     static DatagramSocket sending_socket;
-    NetworkCoursework.SocketType socketType = Type1;
+   NetworkCoursework.SocketType socketType;
+
+    public ThreadedSoundSender(NetworkCoursework.SocketType socketType){
+        this.socketType = socketType;
+    }
 
     public void start(){
         Thread thread = new Thread(this);
         thread.start();
     }
 
+    @Override
     public void run(){
         //Port we are sending to
         int port = 55555;
@@ -58,8 +63,8 @@ public class ThreadedSoundSender implements Runnable{
         int cipher   = 196157828;
 
         //In while loop, sound is recorded and encrypted
-        boolean running = true;
-        while (running){
+        boolean isRunning = true;
+        while (isRunning){
             try {
                 byte[] buffer = recorder.getBlock();
                 ByteBuffer unwrapEncrypt = ByteBuffer.allocate(buffer.length);
