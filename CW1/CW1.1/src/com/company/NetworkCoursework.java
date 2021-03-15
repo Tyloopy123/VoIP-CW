@@ -10,8 +10,6 @@ import java.util.*;
 import java.net.*;
 import javax.sound.sampled.LineUnavailableException;
 
-
-
 public class NetworkCoursework {
 
     private static final int PORT = 8000;
@@ -19,8 +17,6 @@ public class NetworkCoursework {
     private static VoIPController voipController;
     private static ThreadedVoiceSender threadedVoiceSender;
     private static ThreadedVoiceReceiver threadedVoiceReceiver;
-    private static ThreadedTextReceiver threadedTextReceiver;
-    private static ThreadedTextSender threadedTextSender;
     private static InetAddress clientIP;
 
     public enum SocketType {
@@ -32,7 +28,6 @@ public class NetworkCoursework {
         //InitialiseThreads();
         //RecordTest();
         //StartThreadedVoice();
-        //StartThreadedText();
         //RecordTest();
         //TestPackets();
     }
@@ -43,19 +38,11 @@ public class NetworkCoursework {
         threadedVoiceSender.start();
     }
 
-    private static void StartThreadedText() {
-
-        threadedTextReceiver.start();
-        threadedTextSender.start();
-    }
-
     static void InitialiseThreads(SocketType socketType) {
 
         voipController = new VoIPController(socketType);
         threadedVoiceReceiver = new ThreadedVoiceReceiver(socketType);
         threadedVoiceSender = new ThreadedVoiceSender(socketType);
-        threadedTextReceiver = new ThreadedTextReceiver(socketType);
-        threadedTextSender = new ThreadedTextSender(socketType);
     }
 
     static void RecordTest() throws LineUnavailableException, IOException {
