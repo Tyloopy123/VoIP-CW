@@ -24,7 +24,6 @@ public class NetworkCoursework {
     private static InetAddress clientIP;
 
     public enum SocketType {
-
         Type1, Type2, Type3, Type4;
     }
 
